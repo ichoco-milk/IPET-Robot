@@ -1,10 +1,9 @@
-// main.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
 import QtQuick.Layouts
 
-import "common/components" as Components // ahora la traemos directamente
+import "common/components" as Components
 import "pages/home" as Home
 import "pages/voice" as Voice
 
@@ -22,7 +21,6 @@ Window {
         anchors.fill: parent
         spacing: 0
 
-        // ——— Sidebar fija ———
         Components.Sidebar {
             id: sidebar
             Layout.preferredWidth: 100
@@ -46,21 +44,19 @@ Window {
             }
         }
 
-        // ——— Área animada ———
         StackView {
             id: stackView
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            // preinstanciamos los components
             Component { id: homeComponent; Home.HomePage {} }
             Component { id: voiceComponent; Voice.VoicePage {} }
 
             initialItem: homeComponent
 
+            // Exit content animation, move all content to down but with more velocity than enter content
             replaceExit: Transition {
                 NumberAnimation {
-                    // ANIMAMOS la posición Y del ítem que sale
                     property: "y"
                     from: 0
                     to: stackView.height
@@ -68,7 +64,8 @@ Window {
                     easing.type: Easing.InQuad
                 }
             }
-            // Al entrar: baja el nuevo contenido desde arriba
+
+            // Exit content animation, move all content to down
             replaceEnter: Transition {
                 NumberAnimation {
                     property: "y"
@@ -81,8 +78,7 @@ Window {
         }
     }
 
-    // Atajo para mostrar/ocultar sidebar
-    Shortcut {
+    Shortcut { // Hide/Show sidebar
         sequence: "Tab"
         onActivated: sidebar.visible = !sidebar.visible
     }

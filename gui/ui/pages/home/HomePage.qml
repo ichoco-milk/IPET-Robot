@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../common/components" as Components
+import "../" as Pages
 
-Components.PageTemplate {
+Pages.PageTemplate {
     Component.onCompleted: {
         mainWindow.title = "Página de inicio"
     }
@@ -51,8 +51,7 @@ Components.PageTemplate {
                 property string technologyName: ""
                 property string description: ""
 
-                // Eliminamos el height fijo del Layout
-                Layout.preferredHeight: Math.max(leftRect.implicitHeight, rightRect.implicitHeight)
+                Layout.preferredHeight: leftRect.implicitHeight
 
                 Rectangle {
                     id: leftRect
@@ -60,7 +59,9 @@ Components.PageTemplate {
                     Layout.fillWidth: true
                     Layout.minimumWidth: 140
                     Layout.preferredWidth: 140
-                    implicitHeight: Math.max(imageColumn.implicitHeight + 20, rightRect.implicitHeight) // Padding vertical
+
+                    // Remove height difference of height in left and right blocks
+                    implicitHeight: Math.max(imageColumn.implicitHeight + 20, rightRect.implicitHeight)
 
                     bottomLeftRadius: 20
                     topLeftRadius: 20
@@ -97,14 +98,16 @@ Components.PageTemplate {
                     Layout.fillWidth: true
                     Layout.minimumWidth: 100
                     Layout.preferredWidth: (homePage.width - 140) * 0.9
-                    implicitHeight: Math.max(imageColumn.implicitHeight + 20, descText.implicitHeight + 20) // Padding vertical
+
+                    // Remove height difference of height in left and right blocks.
+                    implicitHeight: Math.max(imageColumn.implicitHeight + 20, descText.implicitHeight + 20) // 20 = Padding vertical
 
                     bottomRightRadius: 20
                     topRightRadius: 20
 
                     Text {
                         id: descText
-                        width: parent.width - 20 // Margin horizontal
+                        width: parent.width - 20 // 20 = Margin horizontal
                         anchors.centerIn: parent
                         wrapMode: Text.WordWrap
                         text: layout.description

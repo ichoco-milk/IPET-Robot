@@ -10,7 +10,6 @@ Rectangle {
 
     signal navigateTo(string pageName)
 
-    // Expose buttons as global
     property alias homeButton: homeSidebar.item
     property alias voiceButton: voiceSidebar.item
 

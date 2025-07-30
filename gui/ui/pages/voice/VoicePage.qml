@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../common/components" as Components
+import "../" as Pages
 
-Components.PageTemplate {
+Pages.PageTemplate {
     Component.onCompleted: {
         mainWindow.title = "Voz"
     }

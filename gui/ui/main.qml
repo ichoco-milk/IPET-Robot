@@ -25,22 +25,32 @@ Window {
             id: sidebar
             Layout.preferredWidth: 100
             Layout.fillHeight: true
-             onNavigateTo: function(pageName) {
+
+            property var lastSidebarButton: sidebar.homeButton
+
+            onNavigateTo: function(pageName) {
                 if (pageName === mainWindow.currentPageName) return
+
+                mainWindow.currentPageName = pageName
+                if (lastSidebarButton != null) {
+                    lastSidebarButton.active = false;
+                }
 
                 switch (pageName) {
                 case "home":
                     stackView.replace(homeComponent)
-                    sidebar.homeButton.active  = true
-                    sidebar.voiceButton.active = false
+                    lastSidebarButton = sidebar.homeButton
                     break
                 case "voice":
                     stackView.replace(voiceComponent)
-                    sidebar.homeButton.active  = false
-                    sidebar.voiceButton.active = true
+                    lastSidebarButton = sidebar.voiceButton
                     break
+                default:
+                    stackView.clear()
+                    console.error("Unknown page \"" + pageName + "\"")
+                    return;
                 }
-                mainWindow.currentPageName = pageName
+                lastSidebarButton.active = true
             }
         }
 
